@@ -49,8 +49,8 @@ const addprdescription = async () => {
             JiraUrl,
             sonarQubeUrl
         });
-        core.info(`body ::: ${body}`);
-        let currentBody = await client.rest.pulls.body
+        core.info(`body ::: ${updatedJiraBody}`);
+        let currentBody = context.payload.pull_request.body
         const updatedCurrentBody = currentBody.replace('--jira-body-here--', `${updatedJiraBody}`);
 
         await client.rest.pulls.update({
