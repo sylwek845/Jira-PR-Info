@@ -7,7 +7,7 @@ Pull Request Description      |   Jira Ticket
 ![PR-description](PR-description.png) | ![Jira Ticket](Jira-Ticket.png)
 
 ## Example Workflow 
-- Create a file `Jira-pr-action.yml` in the `.github/workflows` directory in your repository with the following content:
+- Create a file `jira-pr-action.yml` in the `.github/workflows` directory in your repository with the following content:
   
 ```yaml
 name: Update PR Description from Jira 
@@ -28,7 +28,6 @@ jobs:
        uses: ks-keshava-rao/Jira-description@v1
        with:
           token: ${{secrets.GITHUB_TOKEN}} # required
-          jiraId: ${{steps.extract_branch_name.outputs.jira_id}} # required
           orgUrl: https://testcompany.atlassian.net # required
           jiraToken: ${{secrets.JIRA_API_TOKEN}} # required
           jiraUsername: ${{secrets.JIRA_USERNAME}} # required
