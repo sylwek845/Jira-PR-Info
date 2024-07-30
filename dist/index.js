@@ -13310,14 +13310,11 @@ const getRegex = () => {
       required: false,
     });
     const separator = core.getInput("separator", { required: false });
-    const keyAnywhereInTitle = core.getBooleanInput("keyAnywhereInTitle", {
-      required: false,
-    });
+    const keyAnywhereInTitle = true;
   
     core.debug(`Project Key ${projectKeyInput}`);
     core.debug(`Project Keys ${projectKeysInput}`);
     core.debug(`Separator ${separator}`);
-    core.debug(`Key Anywhere In Title ${keyAnywhereInTitle}`);
   
     if (stringIsNullOrWhitespace(projectKeyInput) && projectKeysInput.length < 1)
       return [getDefaultJiraIssueRegex()];
@@ -13399,10 +13396,7 @@ const getRegex = () => {
   const isValidProjectKey = (projectKey) =>
     /(?<=^|[a-z]-|[\s\p{P}&[^-])([A-Z][A-Z0-9_]*)/u.test(projectKey);
   
-  const getRegexWithProjectKeyAndKeyAnywhereInTitle = (
-    projectKey,
-    keyAnywhereInTitle
-  ) =>
+  const getRegexWithProjectKeyAndKeyAnywhereInTitle = (projectKey, keyAnywhereInTitle) =>
     `${keyAnywhereInTitle ? "(.)*" : ""}(${
       keyAnywhereInTitle ? "" : "^"
     }${projectKey}-){1}`;
@@ -13415,11 +13409,7 @@ const getRegex = () => {
       )}(\\d)+(\\s)+(.)+`
     );
   
-  const getRegexWithProjectKeyAndSeparator = (
-    projectKey,
-    separator,
-    keyAnywhereInTitle
-  ) =>
+  const getRegexWithProjectKeyAndSeparator = (projectKey, separator, keyAnywhereInTitle) =>
     new RegExp(
       `${getRegexWithProjectKeyAndKeyAnywhereInTitle(
         projectKey,
