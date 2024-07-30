@@ -10,6 +10,7 @@ const addprdescription = async() => {
         const allPossibleRegex = getRegex();
 
         let jiraId = null;
+
         for (const regex of allPossibleRegex) {
             const match = title.match(regex);
             if (match) {
@@ -23,7 +24,7 @@ const addprdescription = async() => {
             }
         }
 
-        if(!matchedValue) {
+        if(!jiraId) {
             core.debug(`Regex ${allPossibleRegex} failed with title ${title}`);
             core.info("Title Failed");
             core.setFailed("PullRequest title does not start with any Jira Issue key.");
