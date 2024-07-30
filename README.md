@@ -55,6 +55,10 @@ jobs:
 > [!NOTE]
 > This build makes use of Jira REST API V2, which means that the Markdown formatting in Jira and GitHub pull requests may not perfectly align. While certain advanced formatting features may not translate precisely, basic elements like plain text, bullet points, and paragraphs remain consistent between the two platforms.
 
+> [!Contribution]
+> Please raise a Pull Request to contribute. 
+> Remember to run `ncc build src/index.js` -> More info https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
+
 
 
 
