@@ -52,6 +52,7 @@ const addprdescription = async () => {
         core.info(`body ::: ${updatedJiraBody}`);
         let currentBody = context.payload.pull_request.body
         const updatedCurrentBody = currentBody.replace('--jira-body-here--', `${updatedJiraBody}`);
+        core.info(`updatedBody ::: ${updatedCurrentBody}`);
 
         await client.rest.pulls.update({
             owner,
