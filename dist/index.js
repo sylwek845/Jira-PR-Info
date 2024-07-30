@@ -13241,25 +13241,23 @@ const addprdescription = async() => {
     try {
         const title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
-        const allPossibleRegex = getRegex();
+        const regex = getRegex();
 
         let jiraId = null;
 
-        for (const regex of allPossibleRegex) {
+        // for (const regex of allPossibleRegex) {
             const matchTitle = title.match(regex);
             if (matchTitle) {
                 jiraId = matchTitle[0];
-                break;
             }
             const matchBranch = branchName.match(regex);
             if (matchBranch) {
                 jiraId = matchBranch[0];
-                break;
             }
-        }
+        // }
 
         if(!jiraId) {
-            core.debug(`Regex ${allPossibleRegex} failed with title ${title}`);
+            core.debug(`Regex ${regex} failed with title ${title}`);
             core.info("Title Failed");
             core.setFailed("PullRequest title does not start with any Jira Issue key.");
             return;
