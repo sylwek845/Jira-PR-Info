@@ -1,4 +1,4 @@
-name: 'Jira description to pr'
+name: 'Jira description to prs body'
 description: 'Add jira description to Pull request'
 branding:
   icon: "check-circle"
@@ -6,9 +6,6 @@ branding:
 inputs:
   token:
     description: "Github access token"
-    required: true
-  jiraId:
-    description: "Jira issue id"
     required: true
   orgUrl: 
     description: "organization's jira url"
