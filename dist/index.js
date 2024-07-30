@@ -13298,7 +13298,7 @@ const util = __nccwpck_require__(5304);
     }
 }
 const getRegex = () => {
-    return new RegExp("\b[A-Z]{3,4}-\d{1,4}\b");
+    return new RegExp("\\b[A-Z]{3,4}-\\d{1,4}\\b");
     const projectKeyInput = core.getInput("projectKey", {required: false});
     const projectKeysInput = core.getMultilineInput("projectKeys", {
         required: false,
