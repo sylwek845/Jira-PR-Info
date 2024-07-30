@@ -13283,8 +13283,8 @@ const util = __nccwpck_require__(5304);
             JiraUrl,
             sonarQubeUrl
         });
-        core.info(`body ::: ${body}`);
-        let currentBody = await client.rest.pulls.body
+        core.info(`body ::: ${updatedJiraBody}`);
+        let currentBody = context.payload.pull_request.body
         const updatedCurrentBody = currentBody.replace('--jira-body-here--', `${updatedJiraBody}`);
 
         await client.rest.pulls.update({
