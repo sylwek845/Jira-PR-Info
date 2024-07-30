@@ -12,14 +12,14 @@ const addprdescription = async() => {
         let jiraId = null;
 
         for (const regex of allPossibleRegex) {
-            const match = title.match(regex);
-            if (match) {
-                jiraId = match[0];
+            const matchTitle = title.match(regex);
+            if (matchTitle) {
+                jiraId = matchTitle[0];
                 break;
             }
             const matchBranch = branchName.match(regex);
             if (matchBranch) {
-                jiraId = match[0];
+                jiraId = matchBranch[0];
                 break;
             }
         }
@@ -72,6 +72,7 @@ const addprdescription = async() => {
     }
 }
 const getRegex = () => {
+    return new RegExp("\\b[A-Z]{3,4}-\\d{1,4}\\b");
     const projectKeyInput = core.getInput("projectKey", { required: false });
     const projectKeysInput = core.getMultilineInput("projectKeys", {
       required: false,
