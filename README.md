@@ -56,9 +56,7 @@ jobs:
 > Please raise a Pull Request to contribute. 
 > Remember to run `ncc build src/index.js` -> More info https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 
-This action is based on https://github.com/ks-keshava-rao/Jira-description 
-
-
+This action is based on https://github.com/ks-keshava-rao/Jira-description
 
 
 

@@ -13248,9 +13248,11 @@ const util = __nccwpck_require__(5304);
 
             async function addPrInfo() {
     try {
-        const title = getPullRequestTitle();
+        let title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
+        const addIdToTitle = true // TODO - config var
         const regex = RegExp("\\b[A-Z]{3,4}-\\d{1,4}\\b");
+        const {context} = github;
 
         let jiraId = null;
 
@@ -13259,6 +13261,9 @@ const util = __nccwpck_require__(5304);
             core.debug(`Found match in title - ${jiraId}`);
         } else if (regex.test(branchName)) {
             jiraId = branchName.match(regex)[0];
+            if (addIdToTitle) {
+                title = `[${jiraId}] - ${title}`
+            }
             core.debug(`Found match in branch - ${jiraId}`);
         }
 
@@ -13277,7 +13282,7 @@ const util = __nccwpck_require__(5304);
         const client = new Octokit({
             auth: token
         });
-        const {context} = github;
+
         const pull_number = context.payload.pull_request.number;
         const owner = context.payload.repository.owner.login;
         const repo = context.payload.pull_request.base.repo.name;
@@ -13296,12 +13301,13 @@ const util = __nccwpck_require__(5304);
         core.debug(`#######currentBody ::: ${currentBody}`);
         let updatedPRBody = currentBody.replace('--jira-body-here--', `${updatedJiraBody}`);
         core.debug(`#######updatedBody ::: ${updatedPRBody}`);
-        let body = `body: ${updatedPRBody}`
+        let body = `${updatedPRBody}`
 
         await client.rest.pulls.update({
             owner,
             repo,
             pull_number,
+            title,
             body,
         })
     } catch (e) {
@@ -13367,10 +13373,14 @@ module.exports = async({authToken,jiraApiUrl}) => {
 /***/ ((module) => {
 
 module.exports = {
-    constructBodyTemplate: ({fields, JiraUrl}) => {
+    constructBodyTemplate: ({fields, JiraUrl, JiraId}) => {
         const {description, summary} = fields;
-        const body = `## Jira Ticket\n${JiraUrl} \n\n# Description\n\n### ${summary}\n\n ${description}\n\n`
-        return body;
+        let updatedDescription = description.toString().replace(/\[https(.*?)\]/, '<https$1>');
+        return `
+        #${summary} - [${JiraId}](${JiraUrl} "${JiraId}")\n\n
+        
+        > ${updatedDescription}
+        `;
     }
 }
 
