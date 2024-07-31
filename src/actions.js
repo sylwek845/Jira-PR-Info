@@ -84,6 +84,9 @@ const getPullRequestBranchName = () => {
         const message = "This action should only be run with Pull Request Events";
         throw new Error(message);
     }
+    core.debug(
+        `Pull Request Branch - ${pull_request.branchName}`
+    );
     return pull_request.branchName;
 };
 
@@ -96,5 +99,8 @@ const getPullRequestTitle = () => {
         const message = "This action should only be run with Pull Request Events";
         throw new Error(message);
     }
+    core.debug(
+        `Pull Request Title - ${pull_request.title}`
+    );
     return pull_request.title;
 };
