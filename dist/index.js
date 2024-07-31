@@ -13237,7 +13237,7 @@ const github = __nccwpck_require__(2253);
             const {Octokit} = __nccwpck_require__(2190);
 const fetchDescription = __nccwpck_require__(1604)
 const util = __nccwpck_require__(5304);
-            const addprdescription = async () => {
+            const addPrInfo = async () => {
     try {
         const title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
@@ -13298,7 +13298,7 @@ const util = __nccwpck_require__(5304);
     } catch (e) {
         core.setFailed(`process failed with ::: ${e.message}`);
     }
-}
+            };
 
             const getPullRequestBranchName = () => {
     const pull_request = github.context.payload.pull_request;
@@ -13546,7 +13546,7 @@ var __webpack_exports__ = {};
 (() => {
 const trigger = __nccwpck_require__(4665);
 const core = __nccwpck_require__(7682);
-trigger.addprdescription()
+    trigger.addPrInfo()
 .catch(error=>{
     core.setFailed(error.message);
 });
