@@ -16,6 +16,12 @@ inputs:
   jiraUsername:
     description: "Jira username"
     required: true
+  addIdToTitle:
+    description: "Adds Jira Id to title with format `[ID] - `"
+    required: false
+  skipLabel:
+    description: "Use this to avoid the action to fail if JiraId is not included in the PR"
+    required: false
 runs:
   using: 'node20'
   main: 'dist/index.js'

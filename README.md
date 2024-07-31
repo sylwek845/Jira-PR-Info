@@ -25,12 +25,14 @@ jobs:
 
      - name: Update PR description 
        id: update_description
-       uses: ks-keshava-rao/Jira-description@v1
+       uses: sylwek845/Jira-PR-Info@main
        with:
           token: ${{secrets.GITHUB_TOKEN}} # required
           orgUrl: https://testcompany.atlassian.net # required
           jiraToken: ${{secrets.JIRA_API_TOKEN}} # required
           jiraUsername: ${{secrets.JIRA_USERNAME}} # required
+          addIdToTitle: true
+          skipLabel: no-id-pr
 ```
 ## Inputs
 

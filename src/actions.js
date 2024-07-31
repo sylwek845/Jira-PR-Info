@@ -1,4 +1,3 @@
-
 const core = require('@actions/core');
 const github = require('@actions/github');
 const {Octokit} = require("@octokit/rest");
@@ -7,13 +6,20 @@ const util = require('./util');
 
 export async function addPrInfo() {
     try {
+        const skipLabel = core.getInput('skipLabel', {required: false});
         let title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
-        const addIdToTitle = true // TODO - config var
+        const addIdToTitle = core.getInput('addIdToTitle', {required: false});
         const regex = RegExp("\\b[A-Z]{3,4}-\\d{1,4}\\b");
         const {context} = github;
 
         let jiraId = null;
+
+        if (skipLabel != null && title.includes(skipLabel)) {
+            core.info(`PR title contains ${skipLabel}`)
+            core.info("Ending the action")
+            return
+        }
 
         if (regex.test(title)) {
             jiraId = title.match(regex)[0];
