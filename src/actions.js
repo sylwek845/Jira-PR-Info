@@ -85,9 +85,9 @@ const getPullRequestBranchName = () => {
         throw new Error(message);
     }
     core.debug(
-        `Pull Request Branch - ${pull_request.branchName}`
+        `Pull Request Branch - ${pull_request.label}`
     );
-    return pull_request.branchName;
+    return pull_request.label;
 };
 
 const getPullRequestTitle = () => {
