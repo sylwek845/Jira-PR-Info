@@ -13295,6 +13295,7 @@ const util = __nccwpck_require__(5304);
         const updatedJiraBody = util.constructBodyTemplate({
             fields,
             JiraUrl,
+            jiraId,
         });
         core.debug(`#######body ::: ${updatedJiraBody}\n\n`);
         let currentBody = context.payload.pull_request.body
@@ -13379,7 +13380,8 @@ module.exports = {
         return `
         #${summary} - [${JiraId}](${JiraUrl} "${JiraId}")\n\n
         
-        > ${updatedDescription}
+        ##Description
+        ${updatedDescription}
         `;
     }
 }

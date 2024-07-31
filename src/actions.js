@@ -54,6 +54,7 @@ export async function addPrInfo() {
         const updatedJiraBody = util.constructBodyTemplate({
             fields,
             JiraUrl,
+            jiraId,
         });
         core.debug(`#######body ::: ${updatedJiraBody}\n\n`);
         let currentBody = context.payload.pull_request.body
