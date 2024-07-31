@@ -13255,7 +13255,7 @@ const util = __nccwpck_require__(5304);
         const {context} = github;
 
         let jiraId = null;
-
+        core.debug(`addIdToTile = ${addIdToTitle}, skipLabel = ${skipLabel}`)
         if (skipLabel != null && title.includes(skipLabel)) {
             core.info(`PR title contains ${skipLabel}`)
             core.info("Ending the action")
