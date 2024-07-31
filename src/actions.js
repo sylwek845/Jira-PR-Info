@@ -58,7 +58,7 @@ export async function addPrInfo() {
         core.debug(`#######body ::: ${updatedJiraBody}\n\n`);
         let currentBody = context.payload.pull_request.body
         core.debug(`#######currentBody ::: ${currentBody}`);
-        let updatedPRBody = currentBody.replace('--jira-body-here--', `${updatedJiraBody}`);
+        let updatedPRBody = currentBody.replace('<!--jira-body-here-->', `${updatedJiraBody}`);
         core.debug(`#######updatedBody ::: ${updatedPRBody}`);
         let body = `${updatedPRBody}`
 

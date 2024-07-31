@@ -41,6 +41,11 @@ jobs:
 | `jiraToken` | Project scoped Jira API token for Authorization. [check here](#jira-authorization-credentials) for configuring the Jira API token into your Repo | ${{secrets.JIRA_API_TOKEN}} | Yes |
 | `jiraUsername` | Email address or  username of the user account in Jira from which the `jiraToken` was obtained  [refer](#jira-authorization-credentials) . | ${{secrets.JIRA_USERNAME}} | Yes |
 
+## Outputs
+
+To get output from action, please place this `<!--jira-body-here-->` in your body (ideally template)
+This will be replaced by the output of the action.
+
 > [!WARNING]  
 >Action result - the action will fail the workflow in case required input fields provided are incorrect or invalid .
 
