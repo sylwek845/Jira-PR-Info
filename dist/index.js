@@ -13247,13 +13247,15 @@ const util = __nccwpck_require__(5304);
 
         if (regex.test(title)) {
             jiraId = title.match(regex)[0];
+            core.debug(`Found match in title - ${jiraId}`);
         } else if (regex.test(branchName)) {
             jiraId = branchName.match(regex)[0];
+            core.debug(`Found match in branch - ${jiraId}`);
         }
 
-        if (!jiraId) {
+        if (jiraId == null) {
             core.debug(`Regex ${regex} failed with title ${title}`);
-            core.info("Title Failed");
+            core.info("Ticket Finding Failed");
             core.setFailed("PullRequest title does not start with any Jira Issue key.");
             return;
         }
