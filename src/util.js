@@ -5,7 +5,7 @@ module.exports = {
         return `
         #${summary} - [${JiraId}](${JiraUrl} "${JiraId}")\n\n
         
-        ##Description
+        ## :bulb: Description
         ${updatedDescription}
         `;
     }
