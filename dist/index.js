@@ -13230,14 +13230,23 @@ function wrappy (fn, cb) {
 /***/ }),
 
 /***/ 4665:
-        /***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
+        /***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
+
+            "use strict";
+            __nccwpck_require__.r(__webpack_exports__);
+            /* harmony export */
+            __nccwpck_require__.d(__webpack_exports__, {
+                /* harmony export */   "addPrInfo": () => (/* binding */ addPrInfo)
+                /* harmony export */
+            });
 
 const core = __nccwpck_require__(7682);
 const github = __nccwpck_require__(2253);
             const {Octokit} = __nccwpck_require__(2190);
 const fetchDescription = __nccwpck_require__(1604)
 const util = __nccwpck_require__(5304);
-            const addPrInfo = async () => {
+
+            async function addPrInfo() {
     try {
         const title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
@@ -13298,7 +13307,7 @@ const util = __nccwpck_require__(5304);
     } catch (e) {
         core.setFailed(`process failed with ::: ${e.message}`);
     }
-            };
+            }
 
             const getPullRequestBranchName = () => {
     const pull_request = github.context.payload.pull_request;
@@ -13536,6 +13545,54 @@ module.exports = JSON.parse('[[[0,44],"disallowed_STD3_valid"],[[45,46],"valid"]
 /******/ 	}
 /******/ 	
 /************************************************************************/
+    /******/ 	/* webpack/runtime/define property getters */
+    /******/
+    (() => {
+        /******/ 		// define getter functions for harmony exports
+        /******/
+        __nccwpck_require__.d = (exports, definition) => {
+            /******/
+            for (var key in definition) {
+                /******/
+                if (__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+                    /******/
+                    Object.defineProperty(exports, key, {enumerable: true, get: definition[key]});
+                    /******/
+                }
+                /******/
+            }
+            /******/
+        };
+        /******/
+    })();
+    /******/
+    /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+    /******/
+    (() => {
+        /******/
+        __nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+        /******/
+    })();
+    /******/
+    /******/ 	/* webpack/runtime/make namespace object */
+    /******/
+    (() => {
+        /******/ 		// define __esModule on exports
+        /******/
+        __nccwpck_require__.r = (exports) => {
+            /******/
+            if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+                /******/
+                Object.defineProperty(exports, Symbol.toStringTag, {value: 'Module'});
+                /******/
+            }
+            /******/
+            Object.defineProperty(exports, '__esModule', {value: true});
+            /******/
+        };
+        /******/
+    })();
+    /******/
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";

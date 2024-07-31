@@ -1,9 +1,11 @@
+
 const core = require('@actions/core');
 const github = require('@actions/github');
 const {Octokit} = require("@octokit/rest");
 const fetchDescription = require('./fetchDescription')
 const util = require('./util');
-const addPrInfo = async () => {
+
+export async function addPrInfo() {
     try {
         const title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
@@ -64,7 +66,7 @@ const addPrInfo = async () => {
     } catch (e) {
         core.setFailed(`process failed with ::: ${e.message}`);
     }
-};
+}
 
 const getPullRequestBranchName = () => {
     const pull_request = github.context.payload.pull_request;
