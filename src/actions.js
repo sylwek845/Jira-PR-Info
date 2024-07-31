@@ -7,7 +7,7 @@ const addprdescription = async () => {
     try {
         const title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
-        const regex = getRegex();
+        const regex = RegExp("\\b[A-Z]{3,4}-\\d{1,4}\\b");
 
         let jiraId = null;
 
@@ -29,7 +29,6 @@ const addprdescription = async () => {
         const token = core.getInput('token', {required: true});
         const orgUrl = core.getInput('orgUrl', {required: true});
         const jiraToken = core.getInput('jiraToken', {required: true});
-        const orgSonarQubeUrl = (core.getInput('sonarQubeUrl', {required: false}) || false);
         const jiraUsername = core.getInput('JiraUsername', {required: true});
         const authToken = Buffer.from(`${jiraUsername}:${jiraToken}`).toString('base64');
         const client = new Octokit({
@@ -41,7 +40,6 @@ const addprdescription = async () => {
         const repo = context.payload.pull_request.base.repo.name;
         const jiraApiUrl = `${orgUrl}/rest/api/2/issue/${jiraId}`;
         const JiraUrl = `${orgUrl}/browse/${jiraId}`;
-        const sonarQubeUrl = (orgSonarQubeUrl ? `${orgSonarQubeUrl}/dashboard?id=${repo}&pullRequest=${pull_number}` : "");
         const fields = await fetchDescription({
             authToken,
             jiraApiUrl
@@ -49,83 +47,24 @@ const addprdescription = async () => {
         const updatedJiraBody = util.constructBodyTemplate({
             fields,
             JiraUrl,
-            sonarQubeUrl
         });
-        core.info(`body ::: ${updatedJiraBody}`);
+        core.debug(`#######body ::: ${updatedJiraBody}\n\n`);
         let currentBody = context.payload.pull_request.body
-        core.info(`currentBody ::: ${currentBody}`);
-        const updatedCurrentBody = currentBody.replace('--jira-body-here--', `${updatedJiraBody}`);
-        core.info(`updatedBody ::: ${updatedCurrentBody}`);
+        core.debug(`#######currentBody ::: ${currentBody}`);
+        let updatedPRBody = currentBody.replace('--jira-body-here--', `${updatedJiraBody}`);
+        core.debug(`#######updatedBody ::: ${updatedPRBody}`);
+        let body = `body: ${updatedPRBody}`
 
         await client.rest.pulls.update({
             owner,
             repo,
             pull_number,
-            updatedCurrentBody,
+            body,
         })
     } catch (e) {
         core.setFailed(`process failed with ::: ${e.message}`);
     }
 }
-const getRegex = () => {
-    return new RegExp("\\b[A-Z]{3,4}-\\d{1,4}\\b");
-    const projectKeyInput = core.getInput("projectKey", {required: false});
-    const projectKeysInput = core.getMultilineInput("projectKeys", {
-        required: false,
-    });
-    const separator = core.getInput("separator", {required: false});
-    const keyAnywhereInTitle = true;
-
-    core.debug(`Project Key ${projectKeyInput}`);
-    core.debug(`Project Keys ${projectKeysInput}`);
-    core.debug(`Separator ${separator}`);
-
-    if (stringIsNullOrWhitespace(projectKeyInput) && projectKeysInput.length < 1)
-        return [getDefaultJiraIssueRegex()];
-
-    const projectKeys = projectKeysInput.map((projectKey) =>
-        projectKey.replaceAll(/'/g, "")
-    );
-
-    if (!stringIsNullOrWhitespace(projectKeyInput)) {
-        projectKeys.push(projectKeyInput);
-    }
-
-    const escapedProjectKeys = projectKeys.map((projectKey) =>
-        escaperegexp(projectKey)
-    );
-
-    escapedProjectKeys.forEach((projectKey) => {
-        if (!isValidProjectKey(projectKey)) {
-            const message = `ProjectKey ${projectKey} is not valid`;
-            throw new Error(message);
-        }
-    });
-
-    const allPossibleRegex = [];
-
-    if (stringIsNullOrWhitespace(separator)) {
-        escapedProjectKeys.forEach((projectKey) => {
-            allPossibleRegex.push(
-                getRegexWithProjectKey(projectKey, keyAnywhereInTitle)
-            );
-        });
-        return allPossibleRegex;
-    }
-
-    const escapedSeparator = escaperegexp(separator);
-
-    escapedProjectKeys.forEach((projectKey) => {
-        allPossibleRegex.push(
-            getRegexWithProjectKeyAndSeparator(
-                projectKey,
-                escapedSeparator,
-                keyAnywhereInTitle
-            )
-        );
-    });
-    return allPossibleRegex;
-};
 
 const getPullRequestBranchName = () => {
     const pull_request = github.context.payload.pull_request;
@@ -150,39 +89,3 @@ const getPullRequestTitle = () => {
     }
     return pull_request.title;
 };
-
-const getDefaultJiraIssueRegex = () =>
-    new RegExp(
-        "(?<=^|[a-z]-|[\\s\\p{P}&[^\\-])([A-Z][A-Z0-9_]*-\\d+)(?![^\\W_])(\\s)+(.)+",
-        "u"
-    );
-
-const isValidProjectKey = (projectKey) =>
-    /(?<=^|[a-z]-|[\s\p{P}&[^-])([A-Z][A-Z0-9_]*)/u.test(projectKey);
-
-const getRegexWithProjectKeyAndKeyAnywhereInTitle = (projectKey, keyAnywhereInTitle) =>
-    `${keyAnywhereInTitle ? "(.)*" : ""}(${
-        keyAnywhereInTitle ? "" : "^"
-    }${projectKey}-){1}`;
-
-const getRegexWithProjectKey = (projectKey, keyAnywhereInTitle) =>
-    new RegExp(
-        `${getRegexWithProjectKeyAndKeyAnywhereInTitle(
-        projectKey,
-        keyAnywhereInTitle
-      )}(\\d)+(\\s)+(.)+`
-    );
-
-const getRegexWithProjectKeyAndSeparator = (projectKey, separator, keyAnywhereInTitle) =>
-    new RegExp(
-        `${getRegexWithProjectKeyAndKeyAnywhereInTitle(
-        projectKey,
-        keyAnywhereInTitle
-      )}(\\d)+(${separator})+(\\S)+(.)+`
-    );
-
-const stringIsNullOrWhitespace = (str) =>
-    str == null || str.trim() === "";
-module.exports = {
-    addprdescription
-}

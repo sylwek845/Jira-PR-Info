@@ -16,9 +16,6 @@ inputs:
   jiraUsername:
     description: "Jira username"
     required: true
-  sonarQubeUrl:
-    description: "organization's sonarqube url"
-    required: false
 runs:
   using: 'node20'
   main: 'dist/index.js'

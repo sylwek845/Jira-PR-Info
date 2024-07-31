@@ -1,4 +1,4 @@
-# @ks-keshava-rao/Jira-description
+# @sylwek845/Jira-PR-Info
 
 ### Github action to integrate your Jira ticket description to the associated pull request description.
 
@@ -31,18 +31,15 @@ jobs:
           orgUrl: https://testcompany.atlassian.net # required
           jiraToken: ${{secrets.JIRA_API_TOKEN}} # required
           jiraUsername: ${{secrets.JIRA_USERNAME}} # required
-          sonarQubeUrl: https://sonar.testcompany.co # optional
 ```
 ## Inputs
 
 | Name | Description | Example | Required |
 | --- | --- | --- | --- |
 | `token` | Automatically generated repo scoped token, provided by Github by default. configure read and write [permissions](https://github.blog/changelog/2021-04-20-github-actions-control-permissions-for-github_token/#setting-the-default-permissions-for-the-organization-or-repository) for the workflow. | ${{ secrets.GITHUB_TOKEN }} | Yes |
-| `jiraId` | Jira issue id or Jira ticket id for the associated jira issue, can be extracted from a step in a job or obtained by any other way . | ${{steps.extract_branch_name.outputs.jira_id}} or `SWT-328` | Yes |
 | `orgUrl` | Organisation's sub-domain for Jira .| https://sub-domain.atlassian.net | Yes |
 | `jiraToken` | Project scoped Jira API token for Authorization. [check here](#jira-authorization-credentials) for configuring the Jira API token into your Repo | ${{secrets.JIRA_API_TOKEN}} | Yes |
 | `jiraUsername` | Email address or  username of the user account in Jira from which the `jiraToken` was obtained  [refer](#jira-authorization-credentials) . | ${{secrets.JIRA_USERNAME}} | Yes |
-| `sonarQubeUrl` | Organization's  sonarQube sub-domain for code quality and analysis if applicable .  | https://sonar.testcompany.co | No |
 
 > [!WARNING]  
 >Action result - the action will fail the workflow in case required input fields provided are incorrect or invalid .
@@ -58,6 +55,10 @@ jobs:
 > [!Contribution]
 > Please raise a Pull Request to contribute. 
 > Remember to run `ncc build src/index.js` -> More info https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
+
+This action is based on https://github.com/ks-keshava-rao/Jira-description 
+
+
 
 
 
