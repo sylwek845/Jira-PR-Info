@@ -77,15 +77,10 @@ export async function addPrInfo() {
 
 const getPullRequestBranchName = () => {
     const pull_request = github.context.payload.pull_request;
-    core.debug(
-        `Pull Request: ${JSON.stringify(github.context.payload.pull_request)}`
-    );
     if (pull_request == undefined || pull_request.title == undefined) {
         const message = "This action should only be run with Pull Request Events";
         throw new Error(message);
     }
-    core.debug(`Pull Request Branch - ${pull_request.head}`);
-    core.debug(`Pull Request Branch - ${pull_request.head.title}`);
     core.debug(`Pull Request Branch - ${pull_request.head.ref}`);
     return pull_request.head.ref;
 };
