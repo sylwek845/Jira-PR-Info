@@ -13325,10 +13325,10 @@ const util = __nccwpck_require__(5304);
         const message = "This action should only be run with Pull Request Events";
         throw new Error(message);
     }
-                core.debug(
-                    `Pull Request Branch - ${pull_request.label}`
-                );
-                return pull_request.label;
+                core.debug(`Pull Request Branch - ${pull_request.head}`);
+                core.debug(`Pull Request Branch - ${pull_request.head.title}`);
+                core.debug(`Pull Request Branch - ${pull_request.head.ref}`);
+                return pull_request.head.ref;
             };
 
             const getPullRequestTitle = () => {
