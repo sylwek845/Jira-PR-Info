@@ -13251,7 +13251,7 @@ const util = __nccwpck_require__(5304);
         let title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
         const addIdToTitle = core.getInput('addIdToTitle', {required: false});
-        const regex = RegExp("\\b[A-Z]{3,4}-\\d{1,4}\\b");
+        const regex = RegExp("\\b[A-Z]{2,4}-\\d{1,4}\\b");
         const {context} = github;
 
         let jiraId = null;
