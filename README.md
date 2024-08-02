@@ -63,7 +63,12 @@ This will be replaced by the output of the action.
 > Please raise a Pull Request to contribute. 
 > Remember to run `ncc build src/index.js` -> More info https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 
+> [!TODO]
+> * Try to fetch attachments and link them to github using urls
+> *
+
 This action is based on https://github.com/ks-keshava-rao/Jira-description
+
 
 
 

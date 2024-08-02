@@ -13306,7 +13306,7 @@ const util = __nccwpck_require__(5304);
         core.debug(`#######body ::: ${updatedJiraBody}\n\n`);
         let currentBody = context.payload.pull_request.body
         core.debug(`#######currentBody ::: ${currentBody}`);
-        let updatedPRBody = currentBody.replace('<!--jira-body-here-->', `${updatedJiraBody}`);
+        let updatedPRBody = currentBody.replace(/(<!--jira-body-here-start-->)(.*?)(<!--jira-body-here-end-->)/g, "$1New content$3");
         core.debug(`#######updatedBody ::: ${updatedPRBody}`);
         let body = `${updatedPRBody}`
 
@@ -13389,7 +13389,9 @@ module.exports = {
         } else {
             checkedDesc = description
         }
-        let updatedDescription = checkedDesc.toString().replace(/\[https(.*?)\]/, '<https$1>');
+        let updatedDescription = checkedDesc.toString()
+            .replace(/\[(.*?)\|(.*?)\]/g, "[$1]($2)")
+            .replace(/\[https(.*?)\]/, '<https$1>');
         return `# ${summary} - [${jiraId}](${JiraUrl} "${jiraId}")\n## :bulb: Jira Info\n${updatedDescription}`.trim();
     }
 }

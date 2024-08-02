@@ -7,7 +7,9 @@ module.exports = {
         } else {
             checkedDesc = description
         }
-        let updatedDescription = checkedDesc.toString().replace(/\[https(.*?)\]/, '<https$1>');
+        let updatedDescription = checkedDesc.toString()
+            .replace(/\[(.*?)\|(.*?)\]/g, "[$1]($2)")
+            .replace(/\[https(.*?)\]/, '<https$1>');
         return `# ${summary} - [${jiraId}](${JiraUrl} "${jiraId}")\n## :bulb: Jira Info\n${updatedDescription}`.trim();
     }
 }
