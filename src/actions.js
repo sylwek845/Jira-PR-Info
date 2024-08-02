@@ -23,10 +23,10 @@ export async function addPrInfo() {
 
         let jiraId = null;
         if (regex.test(title)) {
-            jiraId = title.match(regex)[0];
+            jiraId = title.match(regex)[0].toUpperCase();
             core.debug(`Found match in title - ${jiraId}`);
         } else if (regex.test(branchName)) {
-            jiraId = branchName.match(regex)[0];
+            jiraId = branchName.match(regex)[0].toUpperCase();
             if (addIdToTitle) {
                 title = `[${jiraId}] - ${title}`
             }
@@ -41,7 +41,6 @@ export async function addPrInfo() {
             return;
         }
 
-        jiraId = jiraId.toUpperCase();
         const token = core.getInput('token', {required: true});
         const orgUrl = core.getInput('orgUrl', {required: true});
         const jiraToken = core.getInput('jiraToken', {required: true});
