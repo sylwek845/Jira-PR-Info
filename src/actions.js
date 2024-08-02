@@ -10,10 +10,10 @@ export async function addPrInfo() {
         let title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
         const addIdToTitle = core.getInput('addIdToTitle', {required: false});
-        const regex = RegExp("\\b[A-Z]{2,4}-\\d{1,4}\\b");
+        const regex = /([a-zA-Z0-9]{1,10}-\d+)/g;
         const {context} = github;
 
-        let jiraId = null;
+
         core.debug(`addIdToTile = ${addIdToTitle}, skipLabel = ${skipLabel}`)
         if (skipLabel != null && title.includes(skipLabel.toString())) {
             core.info(`PR title contains ${skipLabel}`)
@@ -21,6 +21,7 @@ export async function addPrInfo() {
             return
         }
 
+        let jiraId = null;
         if (regex.test(title)) {
             jiraId = title.match(regex)[0];
             core.debug(`Found match in title - ${jiraId}`);
