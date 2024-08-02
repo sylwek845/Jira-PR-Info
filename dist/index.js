@@ -13274,6 +13274,7 @@ const util = __nccwpck_require__(5304);
             core.debug(`Found match in branch - ${jiraId}`);
         }
 
+
         if (jiraId == null) {
             core.debug(`Regex ${regex} failed with title ${title}`);
             core.info("Ticket Finding Failed");
@@ -13281,6 +13282,7 @@ const util = __nccwpck_require__(5304);
             return;
         }
 
+        jiraId = jiraId.toUpperCase();
         const token = core.getInput('token', {required: true});
         const orgUrl = core.getInput('orgUrl', {required: true});
         const jiraToken = core.getInput('jiraToken', {required: true});
