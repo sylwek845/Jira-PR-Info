@@ -45,7 +45,8 @@ jobs:
 
 ## Outputs
 
-To get output from action, please place this `<!--jira-body-here-->` in your body (ideally template)
+The output will be places between `<!--jira-body-here-start-->` and `<!--jira-body-here-end-->` in the body of the PR.
+in your body (ideally template)
 This will be replaced by the output of the action.
 
 > [!WARNING]  
