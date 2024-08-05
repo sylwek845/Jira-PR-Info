@@ -10,6 +10,7 @@ export async function addPrInfo() {
         let title = getPullRequestTitle();
         const branchName = getPullRequestBranchName();
         const addIdToTitle = core.getInput('addIdToTitle', {required: false});
+        const failWhenNoId = core.getInput('failWhenNoId', {required: false});
         const regex = /([a-zA-Z0-9]{1,10}-\d+)/g;
         const {context} = github;
 
@@ -28,7 +29,7 @@ export async function addPrInfo() {
         } else if (regex.test(branchName)) {
             jiraId = branchName.match(regex)[0].toUpperCase();
             if (addIdToTitle) {
-                title = `[${jiraId}] - ${title}`
+                title = `${jiraId} - ${title}`
             }
             core.debug(`Found match in branch - ${jiraId}`);
         }
@@ -37,7 +38,9 @@ export async function addPrInfo() {
         if (jiraId == null) {
             core.debug(`Regex ${regex} failed with title ${title}`);
             core.info("Ticket Finding Failed");
-            core.setFailed("PullRequest title does not start with any Jira Issue key.");
+            if (failWhenNoId === true) {
+                core.setFailed("PullRequest title does not start with any Jira Issue key.");
+            }
             return;
         }
 

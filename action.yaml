@@ -22,6 +22,9 @@ inputs:
   skipLabel:
     description: "Use this to avoid the action to fail if JiraId is not included in the PR"
     required: false
+  failWhenNoId:
+    description: "Set if action is to fail when id is missing"
+    required: false
 runs:
   using: 'node20'
   main: 'dist/index.js'

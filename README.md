@@ -2,9 +2,9 @@
 
 ### Github action to integrate your Jira ticket description to the associated pull request description.
 
-Pull Request Description      |   Jira Ticket         
-:-------------------------:|:-------------------------:
-![PR-description](PR-description.png) | ![Jira Ticket](Jira-Ticket.png)
+|       Pull Request Description        |           Jira Ticket           |
+|:-------------------------------------:|:-------------------------------:|
+| ![PR-description](PR-description.png) | ![Jira Ticket](Jira-Ticket.png) |
 
 ## Example Workflow 
 - Create a file `jira-pr-action.yml` in the `.github/workflows` directory in your repository with the following content:
@@ -33,15 +33,19 @@ jobs:
           jiraUsername: ${{secrets.JIRA_USERNAME}} # required
           addIdToTitle: true
           skipLabel: no-id-pr
+          failWhenNoId: true
 ```
 ## Inputs
 
-| Name | Description | Example | Required |
-| --- | --- | --- | --- |
-| `token` | Automatically generated repo scoped token, provided by Github by default. configure read and write [permissions](https://github.blog/changelog/2021-04-20-github-actions-control-permissions-for-github_token/#setting-the-default-permissions-for-the-organization-or-repository) for the workflow. | ${{ secrets.GITHUB_TOKEN }} | Yes |
-| `orgUrl` | Organisation's sub-domain for Jira .| https://sub-domain.atlassian.net | Yes |
-| `jiraToken` | Project scoped Jira API token for Authorization. [check here](#jira-authorization-credentials) for configuring the Jira API token into your Repo | ${{secrets.JIRA_API_TOKEN}} | Yes |
-| `jiraUsername` | Email address or  username of the user account in Jira from which the `jiraToken` was obtained  [refer](#jira-authorization-credentials) . | ${{secrets.JIRA_USERNAME}} | Yes |
+| Name           | Description                                                                                                                                                                                                                                                                                          | Example                          | Required |
+|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|----------|
+| `token`        | Automatically generated repo scoped token, provided by Github by default. configure read and write [permissions](https://github.blog/changelog/2021-04-20-github-actions-control-permissions-for-github_token/#setting-the-default-permissions-for-the-organization-or-repository) for the workflow. | ${{ secrets.GITHUB_TOKEN }}      | Yes      |
+| `orgUrl`       | Organisation's sub-domain for Jira .                                                                                                                                                                                                                                                                 | https://sub-domain.atlassian.net | Yes      |
+| `jiraToken`    | Project scoped Jira API token for Authorization. [check here](#jira-authorization-credentials) for configuring the Jira API token into your Repo                                                                                                                                                     | ${{secrets.JIRA_API_TOKEN}}      | Yes      |
+| `jiraUsername` | Email address or  username of the user account in Jira from which the `jiraToken` was obtained  [refer](#jira-authorization-credentials) .                                                                                                                                                           | ${{secrets.JIRA_USERNAME}}       | Yes      |
+| `addIdToTitle` | If set to true and ID is missing from title, the action will add it.                                                                                                                                                                                                                                 | true/false                       | No       |
+| `skipLabel`    | You can opt in to skip failing if the PR is label exist in the title, for example if PR title is `SKIP - Update DB` and value is set to `SKIP` it will not fail the PR.                                                                                                                              | Any                              | No       |
+| `failWhenNoId` | Set if Action should fail if Jira Id does not exist in the PR                                                                                                                                                                                                                                        | true/false                       | No       |
 
 ## Outputs
 
