@@ -14,7 +14,6 @@ export async function addPrInfo() {
         const regex = /([a-zA-Z0-9]{1,10}-\d+)/g;
         const {context} = github;
 
-
         core.debug(`addIdToTile = ${addIdToTitle}, skipLabel = ${skipLabel}`)
         if (skipLabel != null && skipLabel !== "" && title.includes(skipLabel.toString())) {
             core.info(`Skipping Label matched - PR title contains ${skipLabel}`)

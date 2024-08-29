@@ -13255,10 +13255,9 @@ const util = __nccwpck_require__(5304);
         const regex = /([a-zA-Z0-9]{1,10}-\d+)/g;
         const {context} = github;
 
-
         core.debug(`addIdToTile = ${addIdToTitle}, skipLabel = ${skipLabel}`)
-        if (skipLabel != null && title.includes(skipLabel.toString())) {
-            core.info(`PR title contains ${skipLabel}`)
+        if (skipLabel != null && skipLabel !== "" && title.includes(skipLabel.toString())) {
+            core.info(`Skipping Label matched - PR title contains ${skipLabel}`)
             core.info("Ending the action")
             return
         }
