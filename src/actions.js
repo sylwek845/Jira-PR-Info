@@ -17,7 +17,7 @@ export async function addPrInfo() {
 
         core.debug(`addIdToTile = ${addIdToTitle}, skipLabel = ${skipLabel}`)
         if (skipLabel != null && skipLabel !== "" && title.includes(skipLabel.toString())) {
-            core.info(`PR title contains ${skipLabel}`)
+            core.info(`Skipping Label matched - PR title contains ${skipLabel}`)
             core.info("Ending the action")
             return
         }
