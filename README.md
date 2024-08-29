@@ -12,8 +12,12 @@
 ```yaml
 name: Update PR Description from Jira 
 on:
- pull_request:
-   types: [opened , reopened]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
 
 jobs:
  update_pr_description:
@@ -21,15 +25,15 @@ jobs:
 
    steps:
      - name: Checkout repository
-       uses: actions/checkout@v2
+       uses: actions/checkout@v4
 
      - name: Update PR description 
        id: update_description
-       uses: sylwek845/Jira-PR-Info@main
+       uses: sylwek845/Jira-PR-Info@1.0.4
        with:
           token: ${{secrets.GITHUB_TOKEN}} # required
           orgUrl: https://testcompany.atlassian.net # required
-          jiraToken: ${{secrets.JIRA_API_TOKEN}} # required
+          jiraToken: ${{secrets.JIRA_TOKEN}} # required
           jiraUsername: ${{secrets.JIRA_USERNAME}} # required
           addIdToTitle: true
           skipLabel: no-id-pr
