@@ -65,9 +65,6 @@ This will be replaced by the output of the action.
 2.  Jira API token should be added to [repository secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) with the desired name for the token value .
 3.  The Jira username must correspond to the email address of the user account used to generate the Jira API token. This username should be set as a secret key in the repository's secrets under the chosen name for the username value.
 
-> [!NOTE]
-> This build makes use of Jira REST API V2, which means that the Markdown formatting in Jira and GitHub pull requests may not perfectly align. While certain advanced formatting features may not translate precisely, basic elements like plain text, bullet points, and paragraphs remain consistent between the two platforms.
-
 > [!Contribution]
 > Please raise a Pull Request to contribute. 
 > Remember to run `ncc build src/index.js` -> More info https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
