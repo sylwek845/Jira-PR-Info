@@ -55,14 +55,15 @@ export async function addPrInfo() {
         const pull_number = context.payload.pull_request.number;
         const owner = context.payload.repository.owner.login;
         const repo = context.payload.pull_request.base.repo.name;
-        const jiraApiUrl = `${orgUrl}/rest/api/2/issue/${jiraId}`;
+        const jiraApiUrl = `${orgUrl}/rest/api/2/issue/${jiraId}?expand=renderedFields`;
         const JiraUrl = `${orgUrl}/browse/${jiraId}`;
-        const fields = await fetchDescription({
+        const {fields, renderedFields} = await fetchDescription({
             authToken,
             jiraApiUrl
         });
         const updatedJiraBody = util.constructBodyTemplate({
             fields,
+            renderedFields,
             JiraUrl,
             jiraId,
         });

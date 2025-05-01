@@ -1,15 +1,37 @@
+const TurndownService = require('turndown');
+const turndownPluginGfm = require('turndown-plugin-gfm');
+const turndownService = new TurndownService({ 
+    headingStyle: 'atx'
+});
+turndownService.use(turndownPluginGfm.gfm);
+
+// Add custom rule for tt tags
+turndownService.addRule('tt', {
+    filter: ['tt'],
+    replacement: function(content) {
+        return '`' + content + '`';
+    }
+});
+
+// Add custom rule for pre tags
+turndownService.addRule('pre', {
+    filter: ['pre'],
+    replacement: function(content) {
+        return '\n```\n' + content + '\n```\n';
+    }
+});
+
 module.exports = {
-    constructBodyTemplate: ({fields, JiraUrl, jiraId}) => {
-        const {description, summary} = fields;
-        let checkedDesc
+    constructBodyTemplate: ({fields, renderedFields, JiraUrl, jiraId}) => {
+        const description = renderedFields.description;
+        const summary = fields.summary;
+        let updatedDescription
+
         if (description == null) {
-            checkedDesc = "No Summary Found in Jira Ticket"
+            updatedDescription = "No Summary Found in Jira Ticket"
         } else {
-            checkedDesc = description
+            updatedDescription = turndownService.turndown(description);
         }
-        let updatedDescription = checkedDesc.toString()
-            .replace(/\[(.*?)\|(.*?)\]/g, "[$1]($2)")
-            .replace(/\[https(.*?)\]/, '<https$1>');
-        return `# ${summary} - [${jiraId}](${JiraUrl} "${jiraId}")\n## :bulb: Jira Info\n${updatedDescription}`.trim();
+        return `**[${jiraId}](${JiraUrl} "${jiraId}") - ${summary}**\n## :bulb: Jira Info\n${updatedDescription}`.trim();
     }
 }

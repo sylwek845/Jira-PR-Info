@@ -7,8 +7,8 @@ module.exports = async({authToken,jiraApiUrl}) => {
             Authorization: `Basic ${authToken}` } 
         });
         if(response.ok){
-             const { fields } = await response.json() ; 
-             return fields;
+             const { fields, renderedFields } = await response.json() ; 
+             return {fields, renderedFields};
         }
         else{
             throw new Error(`Failed to fetch response from jira api, please check Organisation url , jira token , jira username :::: ${ response}`);
